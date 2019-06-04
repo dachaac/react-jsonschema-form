@@ -59,7 +59,14 @@ function DefaultArrayItem(props) {
             }}>
             {(props.hasMoveUp || props.hasMoveDown) && (
               <IconButton
-                icon="arrow-up"
+                icon={
+                  "uiSchema" in props &&
+                  "ui:options" in props.uiSchema &&
+                  "moveUpIcon" in props.uiSchema["ui:options"] &&
+                  props.uiSchema["ui:options"]["moveUpIcon"]
+                    ? props.uiSchema["ui:options"]["moveUpIcon"]
+                    : "arrow-up"
+                }
                 className="array-item-move-up"
                 tabIndex="-1"
                 style={btnStyle}
@@ -70,7 +77,14 @@ function DefaultArrayItem(props) {
 
             {(props.hasMoveUp || props.hasMoveDown) && (
               <IconButton
-                icon="arrow-down"
+                icon={
+                  "uiSchema" in props &&
+                  "ui:options" in props.uiSchema &&
+                  "moveDownIcon" in props.uiSchema["ui:options"] &&
+                  props.uiSchema["ui:options"]["moveDownIcon"]
+                    ? props.uiSchema["ui:options"]["moveDownIcon"]
+                    : "arrow-down"
+                }
                 className="array-item-move-down"
                 tabIndex="-1"
                 style={btnStyle}
@@ -84,7 +98,14 @@ function DefaultArrayItem(props) {
             {props.hasRemove && (
               <IconButton
                 type="danger"
-                icon="remove"
+                icon={
+                  "uiSchema" in props &&
+                  "ui:options" in props.uiSchema &&
+                  "removeIcon" in props.uiSchema["ui:options"] &&
+                  props.uiSchema["ui:options"]["removeIcon"]
+                    ? props.uiSchema["ui:options"]["removeIcon"]
+                    : "remove"
+                }
                 className="array-item-remove"
                 tabIndex="-1"
                 style={btnStyle}
@@ -121,12 +142,21 @@ function DefaultFixedArrayFieldTemplate(props) {
       <div
         className="row array-item-list"
         key={`array-item-list-${props.idSchema.$id}`}>
-        {props.items && props.items.map(DefaultArrayItem)}
+        {props.items &&
+          props.items.map(DefaultArrayItem({ uiSchema: props.uiSchema }))}
       </div>
 
       {props.canAdd && (
         <AddButton
           className="array-item-add"
+          icon={
+            "uiSchema" in props &&
+            "ui:options" in props.uiSchema &&
+            "addIcon" in props.uiSchema["ui:options"] &&
+            props.uiSchema["ui:options"]["addIcon"]
+              ? props.uiSchema["ui:options"]["addIcon"]
+              : undefined
+          }
           onClick={props.onAddClick}
           disabled={props.disabled || props.readonly}
         />
@@ -160,12 +190,23 @@ function DefaultNormalArrayFieldTemplate(props) {
       <div
         className="row array-item-list"
         key={`array-item-list-${props.idSchema.$id}`}>
-        {props.items && props.items.map(p => DefaultArrayItem(p))}
+        {props.items &&
+          props.items.map(p =>
+            DefaultArrayItem(Object.assign({}, p, { uiSchema: props.uiSchema }))
+          )}
       </div>
 
       {props.canAdd && (
         <AddButton
           className="array-item-add"
+          icon={
+            "uiSchema" in props &&
+            "ui:options" in props.uiSchema &&
+            "addIcon" in props.uiSchema["ui:options"] &&
+            props.uiSchema["ui:options"]["addIcon"]
+              ? props.uiSchema["ui:options"]["addIcon"]
+              : undefined
+          }
           onClick={props.onAddClick}
           disabled={props.disabled || props.readonly}
         />

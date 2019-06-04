@@ -211,7 +211,14 @@ function WrapIfAdditional(props) {
         <div className="col-xs-2">
           <IconButton
             type="danger"
-            icon="remove"
+            icon={
+              "uiSchema" in props &&
+              "ui:options" in props.uiSchema &&
+              "removeIcon" in props.uiSchema["ui:options"] &&
+              props.uiSchema["ui:options"]["removeIcon"]
+                ? props.uiSchema["ui:options"]["removeIcon"]
+                : "remove"
+            }
             className="array-item-remove btn-block"
             tabIndex="-1"
             style={{ border: "0" }}

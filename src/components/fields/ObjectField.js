@@ -50,6 +50,14 @@ function DefaultObjectFieldTemplate(props) {
       {canExpand() && (
         <AddButton
           className="object-property-expand"
+          icon={
+            "uiSchema" in props &&
+            "ui:options" in props.uiSchema &&
+            "addIcon" in props.uiSchema["ui:options"] &&
+            props.uiSchema["ui:options"]["addIcon"]
+              ? props.uiSchema["ui:options"]["addIcon"]
+              : undefined
+          }
           onClick={props.onAddClick(props.schema)}
           disabled={props.disabled || props.readonly}
         />
